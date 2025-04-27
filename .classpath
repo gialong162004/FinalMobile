@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="mobile_project/.gradle/8.10.2/dependencies-accessors/19666b7ee7477488faba75fa6199859f9eeb0a35/sources"/>
+	<classpathentry kind="src" path="mobile_project/app/src/androidTest/java"/>
+	<classpathentry kind="src" path="mobile_project/app/src/main/java"/>
+	<classpathentry kind="src" path="mobile_project/app/src/test/java"/>
+	<classpathentry kind="lib" path="mobile_project/app/build/intermediates/compile_and_runtime_not_namespaced_r_class_jar/debug/processDebugResources/R.jar"/>
+	<classpathentry kind="lib" path="mobile_project/app/build/intermediates/merged_java_res/debug/mergeDebugJavaResource/base.jar"/>
+	<classpathentry kind="lib" path="mobile_project/app/build/intermediates/project_dex_archive/debug/dexBuilderDebug/out/d15d7c75528bab2d16885ef341ec175a4ee9927b296757ba97ff34e8bca5c764_0.jar"/>
+	<classpathentry kind="lib" path="mobile_project/app/build/intermediates/project_dex_archive/debug/dexBuilderDebug/out/d15d7c75528bab2d16885ef341ec175a4ee9927b296757ba97ff34e8bca5c764_1.jar"/>
+	<classpathentry kind="lib" path="mobile_project/app/build/intermediates/project_dex_archive/debug/dexBuilderDebug/out/d15d7c75528bab2d16885ef341ec175a4ee9927b296757ba97ff34e8bca5c764_2.jar"/>
+	<classpathentry kind="lib" path="mobile_project/app/build/intermediates/project_dex_archive/debug/dexBuilderDebug/out/d15d7c75528bab2d16885ef341ec175a4ee9927b296757ba97ff34e8bca5c764_3.jar"/>
+	<classpathentry kind="lib" path="mobile_project/app/build/intermediates/project_dex_archive/debug/dexBuilderDebug/out/d15d7c75528bab2d16885ef341ec175a4ee9927b296757ba97ff34e8bca5c764_4.jar"/>
+	<classpathentry kind="lib" path="mobile_project/app/build/intermediates/project_dex_archive/debug/dexBuilderDebug/out/d15d7c75528bab2d16885ef341ec175a4ee9927b296757ba97ff34e8bca5c764_5.jar"/>
+	<classpathentry kind="lib" path="mobile_project/app/build/intermediates/project_dex_archive/debug/dexBuilderDebug/out/d15d7c75528bab2d16885ef341ec175a4ee9927b296757ba97ff34e8bca5c764_6.jar"/>
+	<classpathentry kind="lib" path="mobile_project/app/build/intermediates/project_dex_archive/debug/dexBuilderDebug/out/d15d7c75528bab2d16885ef341ec175a4ee9927b296757ba97ff34e8bca5c764_7.jar"/>
+	<classpathentry kind="lib" path="mobile_project/gradle/wrapper/gradle-wrapper.jar"/>
+	<classpathentry kind="output" path="mobile_project/.gradle/8.10.2/dependencies-accessors/19666b7ee7477488faba75fa6199859f9eeb0a35/classes"/>
+</classpath>

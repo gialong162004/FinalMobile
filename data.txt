@@ -1,0 +1,102 @@
+-- Tạo database và sử dụng
+CREATE DATABASE IF NOT EXISTS ShopTrangSuc;
+USE ShopTrangSuc;
+
+-- Tạo bảng danh mục sản phẩm
+CREATE TABLE DANHMUC (
+    MaDM INT PRIMARY KEY AUTO_INCREMENT,
+    TenDM NVARCHAR(50) NOT NULL
+);
+
+-- Tạo bảng sản phẩm
+CREATE TABLE SANPHAM (
+    MaSP INT PRIMARY KEY AUTO_INCREMENT,
+    TenSP NVARCHAR(100) NOT NULL,
+    MoTa NVARCHAR(1000),
+    Gia DECIMAL(10, 2) NOT NULL,
+    SoLuong INT DEFAULT 0,
+    HinhAnh NVARCHAR(255),
+    MaDM INT,
+    FOREIGN KEY (MaDM) REFERENCES DANHMUC(MaDM)
+);
+
+-- Tạo bảng khách hàng (có avatar)
+CREATE TABLE KHACHHANG (
+    MaKH INT PRIMARY KEY AUTO_INCREMENT,
+    HoTen NVARCHAR(100) NOT NULL,
+    Email NVARCHAR(100) UNIQUE,
+    SDT NVARCHAR(20),
+    DiaChi NVARCHAR(255),
+    MatKhau NVARCHAR(100) NOT NULL,
+    Avatar NVARCHAR(255) -- ảnh đại diện
+);
+
+-- Tạo bảng đơn hàng
+CREATE TABLE DONHANG (
+    MaDH INT PRIMARY KEY AUTO_INCREMENT,
+    MaKH INT,
+    NgayDat DATETIME DEFAULT CURRENT_TIMESTAMP,
+    TrangThai NVARCHAR(50) DEFAULT 'Chờ xác nhận',
+    TongTien DECIMAL(10, 2),
+    FOREIGN KEY (MaKH) REFERENCES KHACHHANG(MaKH)
+);
+
+-- Tạo bảng chi tiết đơn hàng
+CREATE TABLE CHITIET_DONHANG (
+    MaDH INT,
+    MaSP INT,
+    SoLuong INT NOT NULL,
+    DonGia DECIMAL(10, 2) NOT NULL,
+    PRIMARY KEY (MaDH, MaSP),
+    FOREIGN KEY (MaDH) REFERENCES DONHANG(MaDH),
+    FOREIGN KEY (MaSP) REFERENCES SANPHAM(MaSP)
+);
+
+-- Tạo bảng giỏ hàng
+CREATE TABLE GIOHANG (
+    MaKH INT,
+    MaSP INT,
+    SoLuong INT NOT NULL DEFAULT 1,
+    NgayThem DATETIME DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (MaKH, MaSP),
+    FOREIGN KEY (MaKH) REFERENCES KHACHHANG(MaKH),
+    FOREIGN KEY (MaSP) REFERENCES SANPHAM(MaSP)
+);
+-- Tạo dữ liệu cho bảng DANHMUC (Danh mục sản phẩm)
+INSERT INTO DANHMUC (TenDM) VALUES
+('Nhẫn'),
+('Dây chuyền'),
+('Vòng tay'),
+('Bông tai');
+
+-- Tạo dữ liệu cho bảng SANPHAM (Sản phẩm)
+INSERT INTO SANPHAM (TenSP, MoTa, Gia, SoLuong, HinhAnh, MaDM) VALUES
+('Nhẫn Kim Cương Xanh', 'Nhẫn bạc đính đá kim cương xanh cao cấp', 2990000, 10, 'images/nhan1.jpg', 1),
+('Dây Chuyền Ngọc Trai', 'Dây chuyền vàng trắng kết hợp ngọc trai sang trọng', 2490000, 15, 'images/daychuyen1.jpg', 2),
+('Vòng Tay Pha Lê', 'Vòng tay thiết kế pha lê thời trang', 990000, 25, 'images/vongtay1.jpg', 3),
+('Bông Tai Bướm Vàng', 'Bông tai hình bướm mạ vàng', 690000, 30, 'images/bongtai1.jpg', 4);
+
+-- Tạo dữ liệu cho bảng KHACHHANG (Khách hàng)
+INSERT INTO KHACHHANG (HoTen, Email, SDT, DiaChi, MatKhau, Avatar) VALUES
+('Nguyễn Văn A', 'a.nguyen@gmail.com', '0123456789', '123 Đường ABC, Quận 1', 'password123', 'images/avatar1.jpg'),
+('Trần Thị B', 'b.tran@gmail.com', '0987654321', '456 Đường XYZ, Quận 2', 'password456', 'images/avatar2.jpg'),
+('Lê Minh C', 'c.le@gmail.com', '0912345678', '789 Đường DEF, Quận 3', 'password789', 'images/avatar3.jpg');
+
+-- Tạo dữ liệu cho bảng DONHANG (Đơn hàng)
+INSERT INTO DONHANG (MaKH, NgayDat, TrangThai, TongTien) VALUES
+(1, '2025-04-20 10:30:00', 'Đã thanh toán', 5490000),
+(2, '2025-04-20 12:00:00', 'Chờ xác nhận', 2490000),
+(3, '2025-04-21 08:45:00', 'Đang giao hàng', 990000);
+
+-- Tạo dữ liệu cho bảng CHITIET_DONHANG (Chi tiết đơn hàng)
+INSERT INTO CHITIET_DONHANG (MaDH, MaSP, SoLuong, DonGia) VALUES
+(1, 1, 1, 2990000),
+(1, 2, 1, 2490000),
+(2, 3, 1, 990000),
+(3, 4, 2, 690000);
+
+-- Tạo dữ liệu cho bảng GIOHANG (Giỏ hàng)
+INSERT INTO GIOHANG (MaKH, MaSP, SoLuong, NgayThem) VALUES
+(1, 2, 1, '2025-04-20 09:00:00'),
+(2, 1, 2, '2025-04-20 11:00:00'),
+(3, 3, 1, '2025-04-21 07:30:00');

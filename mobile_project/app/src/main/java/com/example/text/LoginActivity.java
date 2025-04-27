@@ -119,7 +119,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void navigateToProfile() {
         Log.d("Navigation", "Chuyển hướng đến ProfilesActivity");
-        startActivity(new Intent(LoginActivity.this, ProfilesActivity.class));
+        startActivity(new Intent(LoginActivity.this, ProfileActivity.class));
         finish();
     }
 }
