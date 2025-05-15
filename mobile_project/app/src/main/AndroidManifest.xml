@@ -18,7 +18,7 @@
         android:usesCleartextTraffic="true">  <!-- ✅ Để nguyên phần này -->
 
         <activity
-            android:name=".ProfileActivity"
+            android:name=".LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -29,7 +29,7 @@
         <!-- Đăng ký RegisterActivity -->
         <activity android:name=".RegisterActivity" android:exported="true"/>
         <!-- Màn hình hồ sơ -->
-        <activity android:name=".ProfilesActivity" android:exported="true"/>
+        <activity android:name=".ProfileActivity" android:exported="true"/>
         <activity android:name=".HomeActivity" android:exported="true"/>
 <!--        <activity android:name=".ProfileActivity" android:exported="true"/>-->
     </application>

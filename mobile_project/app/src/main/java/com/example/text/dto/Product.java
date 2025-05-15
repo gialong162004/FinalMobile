@@ -9,18 +9,6 @@ public class Product {
     private String hinhAnh;
     private Category category; // Đối tượng Category
 
-    // Constructor
-    public Product(int maSP, String tenSP, String moTa, double gia, int soLuong, String hinhAnh, Category category) {
-        this.maSP = maSP;
-        this.tenSP = tenSP;
-        this.moTa = moTa;
-        this.gia = gia;
-        this.soLuong = soLuong;
-        this.hinhAnh = hinhAnh;
-        this.category = category;
-    }
-
-    // Getter and Setter
     public int getMaSP() {
         return maSP;
     }
@@ -69,11 +57,11 @@ public class Product {
         this.hinhAnh = hinhAnh;
     }
 
-    public Category getCategory() {
+    public com.example.text.dto.Category getCategory() {
         return category;
     }
 
-    public void setCategory(Category category) {
+    public void setCategory(com.example.text.dto.Category category) {
         this.category = category;
     }
 
