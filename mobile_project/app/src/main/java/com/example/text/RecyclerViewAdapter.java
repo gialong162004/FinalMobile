@@ -67,4 +67,3 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         viewHolder.tvItem.setText(item);
     }
 }
-

@@ -26,8 +26,13 @@
             </intent-filter>
         </activity>
 
+
+
         <!-- Đăng ký RegisterActivity -->
         <activity android:name=".RegisterActivity" android:exported="true"/>
+        <activity android:name=".ResetEmailActivity" android:exported="true"/>
+        <activity android:name=".EnterOtpActivity" android:exported="true"/>
+        <activity android:name=".NewPasswordActivity" android:exported="true"/>
         <!-- Màn hình hồ sơ -->
         <activity android:name=".ProfileActivity" android:exported="true"/>
         <activity android:name=".HomeActivity" android:exported="true"/>

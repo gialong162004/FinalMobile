@@ -1,132 +1,94 @@
 package com.example.text;
 
-import android.content.Intent;
+
+
 import android.os.Bundle;
-import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
-import com.android.volley.Request;
-import com.android.volley.toolbox.JsonObjectRequest;
-import org.json.JSONException;
-import org.json.JSONObject;
-import java.util.HashMap;
-import java.util.Map;
+
+
+import com.example.text.client.ApiClient;
+import com.example.text.dto.User;
+import com.example.text.service.AuthApiService;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    private EditText etUsername, etEmail, etPassword;
-    private ProgressBar progressBar;
+    private EditText etName, etEmail, etPhone, etAddress, etPassword;
+    private Button btnRegister;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        etUsername = findViewById(R.id.etUsername);
+        // Khởi tạo các View
+        etName = findViewById(R.id.etName);
         etEmail = findViewById(R.id.etEmail);
+        etPhone = findViewById(R.id.etPhone);
+        etAddress = findViewById(R.id.etAddress);
         etPassword = findViewById(R.id.etPassword);
-        progressBar = findViewById(R.id.progressBar);
+        btnRegister = findViewById(R.id.btnRegister);
 
-        findViewById(R.id.btnRegister).setOnClickListener(view -> userRegister());
-    }
-
-    private void userRegister() {
-        final String username = etUsername.getText().toString().trim();
-        final String email = etEmail.getText().toString().trim();
-        final String password = etPassword.getText().toString().trim();
-
-        if (!validateInputs(username, email, password)) return;
-
-        progressBar.setVisibility(View.VISIBLE);
-
-        JSONObject jsonBody = new JSONObject();
-        try {
-            jsonBody.put("username", username);
-            jsonBody.put("email", email);
-            jsonBody.put("password", password);
-        } catch (JSONException e) {
-            e.printStackTrace();
-            Toast.makeText(getApplicationContext(), "Lỗi khi tạo dữ liệu!", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.POST, Constants.URL_REGISTER, jsonBody,
-                this::handleResponse,
-                this::handleError) {
+        // Set sự kiện cho nút Đăng ký
+        btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
-            public Map<String, String> getHeaders() {
-                Map<String, String> headers = new HashMap<>();
-                headers.put("Content-Type", "application/json");
-                return headers;
+            public void onClick(View v) {
+                // Lấy dữ liệu người dùng nhập vào
+                String name = etName.getText().toString();
+                String email = etEmail.getText().toString();
+                String phone = etPhone.getText().toString();
+                String address = etAddress.getText().toString();
+                String password = etPassword.getText().toString();
+
+                // Kiểm tra các trường nhập vào (bạn có thể thêm điều kiện kiểm tra hợp lệ)
+                if (name.isEmpty() || email.isEmpty() || phone.isEmpty() || address.isEmpty() || password.isEmpty()) {
+                    Toast.makeText(RegisterActivity.this, "Vui lòng điền đầy đủ thông tin!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                // Tạo đối tượng User từ dữ liệu nhập vào
+                User user = new User();
+                user.setHoTen(name);
+                user.setEmail(email);
+                user.setSdt(phone);
+                user.setDiaChi(address);
+                user.setMatKhau(password);
+                user.setAvatar("link_avatar");  // Có thể thay đổi thành một URL ảnh nếu cần
+
+                // Tạo Retrofit instance và gọi API
+                AuthApiService apiService = ApiClient.getClient().create(AuthApiService.class);
+                apiService.register(user).enqueue(new Callback<User>() {
+                    @Override
+                    public void onResponse(Call<User> call, Response<User> response) {
+                        if (response.isSuccessful()) {
+                            // Nếu đăng ký thành công
+                            Log.d("Register", "Đăng ký thành công: " + response.body().getEmail());
+                            Toast.makeText(RegisterActivity.this, "Đăng ký thành công!", Toast.LENGTH_SHORT).show();
+                        } else {
+                            // Nếu đăng ký thất bại
+                            Log.e("Register", "Đăng ký thất bại");
+                            Toast.makeText(RegisterActivity.this, "Đăng ký thất bại. Vui lòng thử lại.", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<User> call, Throwable t) {
+                        // Nếu có lỗi khi kết nối API
+                        Log.e("Register", "Lỗi: " + t.getMessage());
+                        Toast.makeText(RegisterActivity.this, "Lỗi kết nối: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
-        };
-
-        VolleySingle.getInstance(this).addToRequestQueue(jsonRequest);
+        });
     }
-
-    private boolean validateInputs(String username, String email, String password) {
-        if (TextUtils.isEmpty(username)) {
-            etUsername.setError("Vui lòng nhập tên đăng nhập");
-            etUsername.requestFocus();
-            return false;
-        }
-        if (TextUtils.isEmpty(email) || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            etEmail.setError("Vui lòng nhập email hợp lệ");
-            etEmail.requestFocus();
-            return false;
-        }
-        if (TextUtils.isEmpty(password) || password.length() < 6) {
-            etPassword.setError("Mật khẩu phải có ít nhất 6 ký tự");
-            etPassword.requestFocus();
-            return false;
-        }
-        return true;
-    }
-
-    private void handleResponse(JSONObject response) {
-        progressBar.setVisibility(View.GONE);
-        try {
-            // 🛠 In JSON trả về từ API để debug
-            System.out.println("Response từ server: " + response.toString());
-
-            if (!response.getBoolean("error")) {
-                Toast.makeText(getApplicationContext(), "Đăng ký thành công!", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
-                finish();
-            } else {
-                Toast.makeText(getApplicationContext(), response.getString("message"), Toast.LENGTH_SHORT).show();
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-            Toast.makeText(getApplicationContext(), "Lỗi xử lý dữ liệu từ server!", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-
-    private void handleError(Throwable error) {
-        progressBar.setVisibility(View.GONE);
-
-        String message = "Lỗi kết nối!";
-        if (error instanceof com.android.volley.TimeoutError) {
-            message = "Lỗi timeout! Kiểm tra kết nối internet.";
-        } else if (error instanceof com.android.volley.NoConnectionError) {
-            message = "Không có kết nối internet!";
-        } else if (error instanceof com.android.volley.AuthFailureError) {
-            message = "Lỗi xác thực!";
-        } else if (error instanceof com.android.volley.ServerError) {
-            message = "Lỗi máy chủ!";
-        } else if (error instanceof com.android.volley.NetworkError) {
-            message = "Lỗi mạng!";
-        } else if (error instanceof com.android.volley.ParseError) {
-            message = "Lỗi phân tích dữ liệu!";
-        }
-
-        // 🛠 Ghi Log lỗi
-        error.printStackTrace();
-        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
-    }
-
 }
+
