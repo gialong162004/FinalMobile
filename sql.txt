@@ -1,0 +1,329 @@
+-- drop database fashionstore;
+create database fashionstore;
+use fashionstore;
+-- Tạo bảng
+create table cart (id integer not null auto_increment, count integer not null, product_id integer, user_id varchar(255), primary key (id)) engine=InnoDB;
+create table category (id integer not null auto_increment, category_name nvarchar(1111), category_Image nvarchar(1111), primary key (id)) engine=InnoDB;
+create table `order` (id integer not null auto_increment, address nvarchar(1111), booking_date date, country nvarchar(1111), email nvarchar(1111), fullname nvarchar(1111), note nvarchar(1111), payment_method nvarchar(1111), phone nvarchar(1111), status nvarchar(1111), total integer, user_id varchar(255), primary key (id)) engine=InnoDB;
+create table order_item (id integer not null auto_increment, count integer, order_id integer, product_id integer, primary key (id)) engine=InnoDB;
+create table product (id integer not null auto_increment, created_at date, description nvarchar(11111), is_active integer, is_selling integer, price integer, product_name nvarchar(1111), quantity integer, sold integer, category_id integer, primary key (id)) engine=InnoDB;
+create table product_image (id integer not null auto_increment, url_image nvarchar(1111), product_id integer, primary key (id)) engine=InnoDB;
+create table user (id varchar(255) not null, avatar nvarchar(1111), email nvarchar(1111), login_type nvarchar(1111), password nvarchar(1111), phone_number nvarchar(1111), role nvarchar(1111), user_name nvarchar(1111), primary key (id)) engine=InnoDB;
+alter table cart add constraint FK3d704slv66tw6x5hmbm6p2x3u foreign key (product_id) references product (id);
+alter table cart add constraint FKl70asp4l4w0jmbm1tqyofho4o foreign key (user_id) references user (id);
+alter table `order` add constraint FKcpl0mjoeqhxvgeeeq5piwpd3i foreign key (user_id) references user (id);
+alter table order_item add constraint FKs234mi6jususbx4b37k44cipy foreign key (order_id) references `order` (id);
+alter table order_item add constraint FK551losx9j75ss5d6bfsqvijna foreign key (product_id) references product (id);
+alter table product add constraint FK1mtsbur82frn64de7balymq9s foreign key (category_id) references category (id);
+alter table product_image add constraint FK6oo0cvcdtb6qmwsga468uuukk foreign key (product_id) references product (id);
+
+-- Insert dữ liệu
+INSERT INTO `fashionstore`.`user` (`id`, `login_Type`, `role`, `password`, `user_Name`, `avatar`, `email`, `phone_Number`) VALUES ('ho', 'default', 'user', 'MQ==', 'long', 'https://haycafe.vn/wp-content/uploads/2022/02/Avatar-trang-den.png', 'haovo1512@gmail.com', '0799197703');
+INSERT INTO `fashionstore`.`user` (`id`, `login_Type`, `role`, `password`, `user_Name`, `avatar`, `email`, `phone_Number`) VALUES ('admin', 'default', 'admin', 'MQ==', 'ho', 'https://haycafe.vn/wp-content/uploads/2022/02/Avatar-trang-den.png', 'haovo1512@gmail.com', '0799197703');
+
+-- user name = hoanhao1512 pass=1
+-- admin name = admin pass=1
+
+
+
+
+
+
+INSERT INTO `fashionstore`.`category` (`category_Name`, `category_Image`) VALUES ('Nhẫn', 'https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746941608/3.0_v0k0k5.png');
+INSERT INTO `fashionstore`.`category` (`category_Name`, `category_Image`) VALUES ('Dây Chuyền', 'https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746944651/14.1_bzb4fa.png');
+INSERT INTO `fashionstore`.`category` (`category_Name`, `category_Image`) VALUES ('Bông Tai', 'https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746946123/22_q6evt3.png');
+INSERT INTO `fashionstore`.`category` (`category_Name`, `category_Image`) VALUES ('Vòng', 'https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746947282/32_lpxjfn.png');
+INSERT INTO `fashionstore`.`category` (`category_Name`, `category_Image`) VALUES ('Kiềng', 'https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746949162/41_pvtbj6.png');
+
+
+-- Nhẫn (category_id = 1)
+INSERT INTO `fashionstore`.`product` (`created_at`, `description`, `is_active`, `is_selling`, `price`, `product_name`, `quantity`, `sold`, `category_id`) VALUES 
+('2022-11-21', 'Nhẫn vàng 18K đính đá quý tự nhiên, thiết kế tinh xảo phù hợp cho các dịp đặc biệt.', '1', '1', '5000000', 'Nhẫn Vàng Đính Đá Quý', '100', '20', '1'),
+('2022-11-21', 'Nhẫn bạc S925 với họa tiết hoa văn cổ điển, mang phong cách thanh lịch.', '1', '1', '300000', 'Nhẫn Bạc Hoa Văn', '100', '10', '1'),
+('2022-11-11', 'Nhẫn đôi bằng thép không gỉ, thiết kế đơn giản, phù hợp cho cặp đôi.', '1', '1', '360000', 'Nhẫn Đôi Thép Không Gỉ', '100', '20', '1'),
+('2022-03-30', 'Nhẫn vàng trắng đính kim cương nhỏ, phong cách hiện đại và sang trọng.', '1', '1', '5200000', 'Nhẫn Vàng Trắng Kim Cương', '100', '90', '1'),
+('2022-12-09', 'Nhẫn bạc đính ngọc trai, mang vẻ đẹp nhẹ nhàng và nữ tính.', '1', '1', '1200000', 'Nhẫn Bạc Ngọc Trai', '100', '80', '1'),
+('2022-11-03', 'Nhẫn vàng hồng với họa tiết khắc laser, độc đáo và thời thượng.', '1', '1', '3400000', 'Nhẫn Vàng Hồng Khắc Laser', '100', '30', '1'),
+('2022-11-21', 'Nhẫn đính đá CZ cao cấp, lấp lánh, phù hợp cho tiệc tối.', '1', '1', '2500000', 'Nhẫn Đá CZ Lấp Lánh', '100', '20', '1'),
+('2022-01-21', 'Nhẫn bạc phong cách vintage, thiết kế đơn giản nhưng cuốn hút.', '1', '1', '220000', 'Nhẫn Bạc Vintage', '100', '70', '1'),
+('2022-10-02', 'Nhẫn vàng 14K đính đá sapphire, mang phong cách hoàng gia.', '1', '1', '4900000', 'Nhẫn Vàng Sapphire', '100', '20', '1');
+
+-- Dây chuyền (category_id = 2)
+INSERT INTO `fashionstore`.`product` (`created_at`, `description`, `is_active`, `is_selling`, `price`, `product_name`, `quantity`, `sold`, `category_id`) VALUES 
+('2022-10-10', 'Dây chuyền vàng 18K với mặt đá ruby, thiết kế tinh tế và sang trọng.', '1', '1', '5490000', 'Dây Chuyền Vàng Ruby', '100', '90', '2'),
+('2022-03-09', 'Dây chuyền bạc S925 với mặt hình trái tim, phong cách trẻ trung.', '1', '1', '520000', 'Dây Chuyền Bạc Trái Tim', '100', '10', '2'),
+('2022-10-10', 'Dây chuyền vàng trắng đính kim cương, phù hợp cho các sự kiện quan trọng.', '1', '1', '2300000', 'Dây Chuyền Vàng Trắng Kim Cương', '100', '75', '2'),
+('2022-10-09', 'Dây chuyền bạc đính đá CZ, lấp lánh và thời thượng.', '1', '1', '900000', 'Dây Chuyền Bạc Đá CZ', '100', '90', '2'),
+('2022-11-07', 'Dây chuyền vàng hồng với mặt ngọc trai, mang vẻ đẹp thanh lịch.', '1', '1', '1800000', 'Dây Chuyền Vàng Hồng Ngọc Trai', '100', '20', '2'),
+('2022-11-06', 'Dây chuyền thép không gỉ với mặt hình ngôi sao, phong cách cá tính.', '1', '1', '1000000', 'Dây Chuyền Thép Ngôi Sao', '100', '100', '2'),
+('2022-10-17', 'Dây chuyền vàng 14K với mặt đá emerald, thiết kế độc đáo.', '1', '1', '3700000', 'Dây Chuyền Vàng Emerald', '100', '100', '2'),
+('2022-09-11', 'Dây chuyền bạc với mặt hình mặt trăng, mang phong cách huyền bí.', '1', '1', '910000', 'Dây Chuyền Bạc Mặt Trăng', '100', '10', '2'),
+('2022-01-18', 'Dây chuyền vàng 18K với mặt hình hoa, thiết kế tinh xảo.', '1', '1', '2000000', 'Dây Chuyền Vàng Hoa', '100', '20', '2'),
+('2022-08-04', 'Dây chuyền bạc đính đá opal, mang vẻ đẹp lung linh và nữ tính.', '1', '1', '750000', 'Dây Chuyền Bạc Opal', '100', '80', '2');
+
+-- Bông tai (category_id = 3)
+INSERT INTO `fashionstore`.`product` (`created_at`, `description`, `is_active`, `is_selling`, `price`, `product_name`, `quantity`, `sold`, `category_id`) VALUES 
+('2022-11-11', 'Bông tai vàng 18K đính kim cương, thiết kế nhỏ gọn và sang trọng.', '1', '1', '7200000', 'Bông Tai Vàng Kim Cương', '100', '50', '3'),
+('2022-10-10', 'Bông tai bạc S925 với đá CZ, lấp lánh và thời thượng.', '1', '1', '520000', 'Bông Tai Bạc Đá CZ', '100', '10', '3'),
+('2022-10-10', 'Bông tai vàng hồng dạng giọt nước, phong cách thanh lịch.', '1', '1', '5200000', 'Bông Tai Vàng Hồng Giọt Nước', '100', '10', '3'),
+('2022-07-29', 'Bông tai bạc đính ngọc trai, mang vẻ đẹp nhẹ nhàng.', '1', '1', '370000', 'Bông Tai Bạc Ngọc Trai', '100', '20', '3'),
+('2022-10-30', 'Bông tai vàng 14K với đá sapphire, thiết kế hiện đại.', '1', '1', '1200000', 'Bông Tai Vàng Sapphire', '100', '20', '3'),
+('2022-09-12', 'Bông tai thép không gỉ dạng vòng tròn, phong cách tối giản.', '1', '1', '510000', 'Bông Tai Thép Vòng Tròn', '100', '100', '3'),
+('2022-10-29', 'Bông tai bạc với đá ruby, mang phong cách quyến rũ.', '1', '1', '820000', 'Bông Tai Bạc Ruby', '100', '70', '3'),
+('2022-07-24', 'Bông tai vàng trắng đính đá emerald, thiết kế sang trọng.', '1', '1', '6700000', 'Bông Tai Vàng Trắng Emerald', '100', '50', '3'),
+('2022-05-23', 'Bông tai bạc dạng hoa, mang phong cách vintage.', '1', '1', '710000', 'Bông Tai Bạc Hoa', '100', '90', '3');
+
+-- Vòng tay (category_id = 4)
+INSERT INTO `fashionstore`.`product` (`created_at`, `description`, `is_active`, `is_selling`, `price`, `product_name`, `quantity`, `sold`, `category_id`) VALUES 
+('2022-03-09', 'Vòng tay vàng 18K đính đá quý, thiết kế tinh xảo và sang trọng.', '1', '1', '2490000', 'Vòng Tay Vàng Đá Quý', '100', '100', '4'),
+('2022-10-10', 'Vòng tay bạc S925 với charm hình trái tim, phong cách trẻ trung.', '1', '1', '250000', 'Vòng Tay Bạc Trái Tim', '200', '310', '4'),
+('2022-08-04', 'Vòng tay vàng hồng với đá CZ, mang vẻ đẹp lấp lánh.', '1', '1', '1800000', 'Vòng Tay Vàng Hồng Đá CZ', '100', '10', '4'),
+('2022-12-14', 'Vòng tay vàng 14K đính kim cương, thiết kế hiện đại.', '1', '1', '9900000', 'Vòng Tay Vàng Kim Cương', '100', '90', '4'),
+('2022-11-16', 'Vòng tay bạc đính ngọc trai, mang phong cách thanh lịch.', '1', '1', '1000000', 'Vòng Tay Bạc Ngọc Trai', '100', '20', '4'),
+('2022-10-23', 'Vòng tay thép không gỉ với charm ngôi sao, phong cách cá tính.', '1', '1', '190000', 'Vòng Tay Thép Ngôi Sao', '100', '70', '4'),
+('2022-03-25', 'Vòng tay vàng trắng với đá sapphire, thiết kế sang trọng.', '1', '1', '2000000', 'Vòng Tay Vàng Trắng Sapphire', '100', '90', '4'),
+('2022-01-19', 'Vòng tay bạc với họa tiết hoa văn, mang phong cách vintage.', '1', '1', '560000', 'Vòng Tay Bạc Hoa Văn', '100', '78', '4'),
+('2022-01-15', 'Vòng tay vàng 18K với charm hình hoa, thiết kế tinh xảo.', '1', '1', '1200000', 'Vòng Tay Vàng Hoa', '100', '120', '4');
+
+-- Kiềng (category_id = 5)
+INSERT INTO `fashionstore`.`product` (`created_at`, `description`, `is_active`, `is_selling`, `price`, `product_name`, `quantity`, `sold`, `category_id`) VALUES 
+('2022-07-04', 'Kiềng vàng 18K với họa tiết chạm khắc tinh xảo, mang phong cách truyền thống.', '1', '1', '9990000', 'Kiềng Vàng Chạm Khắc', '100', '30', '5'),
+('2022-05-30', 'Kiềng bạc S925 đính đá CZ, mang vẻ đẹp lấp lánh.', '1', '1', '899000', 'Kiềng Bạc Đá CZ', '40', '50', '5'),
+('2022-01-29', 'Kiềng vàng hồng với đá ruby, thiết kế sang trọng và quý phái.', '1', '1', '6900000', 'Kiềng Vàng Hồng Ruby', '80', '70', '5'),
+('2022-09-27', 'Kiềng vàng 14K với ngọc trai, mang phong cách thanh lịch.', '1', '1', '2300000', 'Kiềng Vàng Ngọc Trai', '100', '10', '5'),
+('2022-04-06', 'Kiềng bạc với họa tiết hoa văn cổ điển, mang phong cách vintage.', '1', '1', '760000', 'Kiềng Bạc Hoa Văn', '100', '20', '5'),
+('2022-03-30', 'Kiềng vàng trắng đính kim cương, thiết kế hiện đại và tinh tế.', '1', '1', '5200000', 'Kiềng Vàng Trắng Kim Cương', '100', '90', '5'),
+('2022-04-15', 'Kiềng vàng 18K với đá sapphire, mang phong cách hoàng gia.', '1', '1', '3500000', 'Kiềng Vàng Sapphire', '100', '10', '5'),
+('2022-08-16', 'Kiềng bạc đính đá opal, mang vẻ đẹp lung linh.', '1', '1', '1200000', 'Kiềng Bạc Opal', '100', '50', '5'),
+('2022-03-11', 'Kiềng vàng hồng với đá emerald, thiết kế độc đáo và sang trọng.', '1', '1', '2400000', 'Kiềng Vàng Hồng Emerald', '100', '100', '5');
+  
+
+
+
+
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746935388/1_ix8v6l.png', '1');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746935370/1.2_fqjwip.png', '1');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746935362/1.1_ktybor.png', '1');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746935379/1.3_ol3lqp.jpg', '1');
+
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746938500/2.0_zxyazw.png', '2');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746938508/2.1_wtwtro.png', '2');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746938512/2.2_ylgder.jpg', '2');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746938520/2.3_txsvzu.jpg', '2');
+
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746941608/3.0_v0k0k5.png', '3');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746941611/3.1_ml4qau.png', '3');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746941617/3.2_vo6oki.png', '3');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746941623/3.3_tmdt7d.jpg', '3');
+
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746942032/4.0_n2zlcc.png', '4');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746942035/4.1_l6dkts.png', '4');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746942039/4.2_q8qxyw.jpg', '4');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746942047/4.3_svgv3u.jpg', '4');
+
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746942129/5.0_jzwt15.png', '5');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746942130/5.1_wkdboj.png', '5');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746942131/5.2_s2r9qs.jpg', '5');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746942134/5.3_zglj6s.jpg', '5');
+
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746942083/6.0_b9x5ja.png', '6');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746942085/6.1_fylsa8.png', '6');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746942085/6.2_qpk6j6.jpg', '6');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746942087/6.3_dgorbw.jpg', '6');
+
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746942087/7.0_pm25jl.png', '7');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746942088/7.1_k8hbhz.png', '7');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746942089/7.2_zflrmh.jpg', '7');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746942093/7.3_yxftnk.jpg', '7');
+
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746942091/8.0_qnpbio.png', '8');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746942093/8.1_bdimbz.png', '8');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746942093/8.2_fwlzuz.jpg', '8');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746942094/8.3_i7kpkv.jpg', '8');
+
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746942095/9.0_pwnaqx.png', '9');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746942096/9.1_x5ebp8.png', '9');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746942099/9.2_flmwsj.jpg', '9');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746942100/9.3_r43mej.jpg', '9');
+
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746944633/10.0_rfjbag.png', '10');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746944634/10.1_erwfqb.png', '10');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746944635/10.2_i4dyjy.jpg', '10');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746944635/10.3_q7urmx.jpg', '10');
+
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746944635/11.0_upgbv7.png', '11');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746944640/11.1_nxamuc.png', '11');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746944639/11.2_kr3zmh.jpg', '11');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746944639/11.3_bfufdm.jpg', '11');
+
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746944644/12_dxbrtf.png', '12');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746944641/12.1_defpjx.png', '12');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746944643/12.2_dhuxom.png', '12');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746944643/12.2_dhuxom.png', '12');
+
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746944650/13_jeryaq.png', '13');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746944647/13.1_e7yzv0.png', '13');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746944647/13.2_wourcj.jpg', '13');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746944648/13.3_tn2nbz.jpg', '13');
+
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746944658/14_malhf4.png', '14');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746944651/14.1_bzb4fa.png', '14');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746944652/14.2_pel9vp.png', '14');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746944654/14.3_mg4fck.png', '14');
+
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746944662/15_zbwsql.png', '15');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746944659/15.1_mk3gqi.png', '15');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746944658/15.2_qbvnrl.png', '15');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746944658/15.3_dqf05w.jpg', '15');
+
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746944667/16_ax0n2g.png', '16');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746944662/16.1_uf6mko.png', '16');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746944663/16.2_gcvxkj.png', '16');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746944669/16.3_fpf1zk.jpg', '16');
+
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746944675/17_yells2.png', '17');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746944669/17.1_ueoso1.png', '17');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746944670/17.2_ksdzts.jpg', '17');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746944675/17.3_alx8ki.jpg', '17');
+
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746944680/18_cazrby.png', '18');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746944684/18.1_scr5qq.png', '18');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746944679/18.2_ofxved.png', '18');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746944681/18.3_yv8ppq.png', '18');
+
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746944688/19_ky1vcp.png', '19');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746944682/19.1_pfxsex.png', '19');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746944687/19.2_irerhz.jpg', '19');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746944690/19.3_deflm3.jpg', '19');
+
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746946111/20_mtigx7.png', '20');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746946110/20.1_igkhlj.png', '20');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746946111/20.2_vqf5rc.jpg', '20');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746946112/20.3_qefgsf.jpg', '20');
+
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746946116/21_acmsxb.png', '21');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746946112/21.1_jkrdxv.png', '21');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746946114/21.2_agmc5u.jpg', '21');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746946115/21.3_abh0vl.jpg', '21');
+
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746946123/22_q6evt3.png', '22');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746946120/22.1_xiogou.png', '22');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746946120/22.2_ji6dme.jpg', '22');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746946121/22.3_k37an8.jpg', '22');
+
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746946127/23_bh2jvq.png', '23');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746946124/23.1_inbmkp.png', '23');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746946125/23.2_thp5d8.jpg', '23');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746946126/23.3_q0hfkg.jpg', '23');
+
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746946129/24.1_eqtow6.png', '24');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746946132/24_c2py7j.png', '24');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746946131/24.3_ptrum7.jpg', '24');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746946130/24.2_p0fopc.jpg', '24');
+
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746946138/25_sje87k.png', '25');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746946133/25.1_ctbkam.png', '25');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746946135/25.2_spmuzy.jpg', '25');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746946136/25.3_a8vkul.jpg', '25');
+
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746946143/26_emrvb7.png', '26');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746946139/26.1_ptnuhs.png', '26');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746946140/26.2_rhwl9b.jpg', '26');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746946141/26.3_r1rcb4.jpg', '26');
+
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746946148/27_fxluvj.png', '27');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746946144/27.1_k81djz.png', '27');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746946145/27.2_nf8xro.jpg', '27');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746946146/27.3_ixs6rt.jpg', '27');
+
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746946152/28_qiu0cr.png', '28');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746946149/28.1_c2vcs2.png', '28');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746946150/28.2_sba2cq.jpg', '28');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746946151/28.3_qcm0us.jpg', '28');
+
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746947322/38_l02ptf.png', '29');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746947317/38.1_wbehv1.png', '29');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746947321/38.3_dwsurb.jpg', '29');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746947319/38.2_gusfb6.jpg', '29');
+
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746947269/30_njabsb.png', '30');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746947266/30.1_vs1mll.png', '30');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746947267/30.2_zmrlrc.jpg', '30');
+
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746947277/31_vmpmnj.png', '31');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746947270/31.1_lyvdaa.png', '31');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746947274/31.3_ru2cho.jpg', '31');
+
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746947282/32_lpxjfn.png', '32');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746947277/32.1_snaclf.png', '32');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746947281/32.3_ik7tov.jpg', '32');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746947279/32.2_epsxb2.jpg', '32');
+
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746947289/33_gwtxs3.png', '33');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746947284/33.1_ndjs3u.png', '33');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746947285/33.2_zzowc9.jpg', '33');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746947287/33.3_t4gpll.jpg', '33');
+
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746947298/34_veofnj.png', '34');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746947291/34.1_ixhmsd.png', '34');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746947296/34.3_eqyqnb.jpg', '34');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746947294/34.2_ihewqk.png', '34');
+
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746947304/35_gwunup.png', '35');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746947297/35.1_tzrir2.png', '35');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746947299/35.2_gdjsdi.jpg', '35');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746947301/35.3_wxfsze.jpg', '35');
+
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746947309/36_e4ocmf.png', '36');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746947304/36.1_kwkt5c.png', '36');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746947306/36.2_r8ubzh.jpg', '36');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746947307/36.3_ybk2dw.jpg', '36');
+
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746947316/37_vnlosd.png', '37');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746947311/37.1_up2lyr.png', '37');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746947314/37.3_kya3au.jpg', '37');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746947312/37.2_vemjha.jpg', '37');
+
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746949156/40_suummz.png', '38');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746949149/40.1_nr3ep1.png', '38');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746949152/40.3_duclie.jpg', '38');
+
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746949162/41_pvtbj6.png', '39');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746949156/41.1_pltjcq.png', '39');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746949158/41.2_hnubov.png', '39');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746949158/41.2_hnubov.png', '39');
+
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746949170/42_dbnpcx.png', '40');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746949164/42.1_gsnnk5.png', '40');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746949168/42.3_wwjank.jpg', '40');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746949166/42.2_afkqzf.jpg', '40');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('hhttps://res.cloudinary.com/dx8ffnhq3/image/upload/v1746949166/42.2_afkqzf.jpg', '40');
+
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746949179/43_qo4a2q.png', '41');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746949173/43_1_kg3q4w.png', '41');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746949175/43.2_pp2por.jpg', '41');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746949177/43.3_oaiogb.jpg', '41');
+
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746949188/44_idgj2u.png', '42');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746949183/44.2_m8ofjm.png', '42');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746949186/44.3_wvqtqt.jpg', '42');
+
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746949194/45_sjookc.png', '43');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746949194/45_sjookc.png', '43');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746949192/45.2_eq3xmu.jpg', '43');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746949194/45_sjookc.png', '43');
+
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746949203/46_lg72p1.png', '44');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746949199/46.2_ldzovs.jpg', '44');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746949201/46.3_kz7yl4.jpg', '44');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746949203/46_lg72p1.png', '44');
+
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746949213/47_obemb8.png', '45');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746949205/47.1_tasgqy.png', '45');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746949211/47.3_gmfevc.jpg', '45');
+
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746949223/48_adcmju.png', '46');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746949216/48.1_ph1spi.png', '46');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746949221/48.3_jj6l5d.jpg', '46');
+INSERT INTO `fashionstore`.`product_image` (`url_image`, `product_id`) VALUES ('https://res.cloudinary.com/dx8ffnhq3/image/upload/v1746949218/48.2_tpabcj.jpg', '46');
+
