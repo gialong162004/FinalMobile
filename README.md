@@ -1,7 +1,7 @@
-📱 Jewelry Store App – Các chức năng chính \n
+#📱 Jewelry Store App – Các chức năng chính
 Đây là tài liệu mô tả các chức năng chính được hỗ trợ trong ứng dụng mua sắm di động. Ứng dụng bao gồm các tính năng liên quan đến người dùng, mua sắm sản phẩm, quản lý đơn hàng và thông tin cá nhân.
 
-🔐 Xác thực người dùng\n
+#🔐 Xác thực người dùng
 Đăng ký tài khoản: Người dùng mới có thể tạo tài khoản, kiểm tra hợp lệ các trường: họ tên, email, mật khẩu, xác nhận mật khẩu.
 Đăng nhập: Đăng nhập bằng tên tài khoản và mật khẩu. Hỗ trợ ghi nhớ đăng nhập và truy cập chức năng quên mật khẩu.
 Quên mật khẩu: Gửi mã OTP để đặt lại mật khẩu khi quên. Kiểm tra tính hợp lệ và thời gian của mã xác nhận.
